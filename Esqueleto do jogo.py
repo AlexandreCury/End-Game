@@ -102,6 +102,9 @@ class Mob(pygame.sprite.Sprite):
         self.speedx = -5
         self.speedy = 0
 
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85 / 2)
+
         # Metodo que atualiza a posição da navinha
     def update(self):
         self.rect.x += self.speedx
@@ -174,6 +177,15 @@ try:
             # Depois de processar os eventos.
             # Atualiza a ação de cada sprite.
         all_sprites.update()
+
+        # Verifica se houve colisão entre nave e meteoro
+        hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+        if hits:
+            # Toca o som da colisão
+            #boom_sound.play()
+            #time.sleep(1) # Precisa esperar senão fecha
+            
+            running = False
     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
