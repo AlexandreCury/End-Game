@@ -126,15 +126,15 @@ class Bomb(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # Sorteia um lugar inicial em x
-        self.rect.x = WIDTH/2
+        self.rect.x = 400 #random.randrange(400 - 500)
         # Sorteia um lugar inicial em y
         self.rect.y = 0
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = -6
         self.speedy = 6
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85 / 2)
+        self.radius = int(self.rect.width * .85)
 
         # Metodo que atualiza a posição da bomba
     def update(self):
@@ -216,13 +216,18 @@ try:
             # Atualiza a ação de cada sprite.
         all_sprites.update()
 
-        # Verifica se houve colisão entre nave e meteoro
+        # Verifica se houve colisão
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
         if hits:
             # Toca o som da colisão
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
-            
+            running = False
+        if hits_bomb:
+            # Toca o som da colisão
+            #boom_sound.play()
+            #time.sleep(1) # Precisa esperar senão fecha
             running = False
     
         # A cada loop, redesenha o fundo e os sprites
