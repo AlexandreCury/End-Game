@@ -90,25 +90,25 @@ class Mob(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # Sorteia um lugar inicial em y
-        self.rect.y = 725
+        self.rect.y = random.randrange(48,550)
         # Sorteia um lugar inicial em x
-        self.rect.x = 1400
+        self.rect.x = 1000
         # Sorteia uma velocidade inicial
-        self.speedx = random.randrange(-5, 0)
+        self.speedx = -5
         self.speedy = 0
 
         # Metodo que atualiza a posição da navinha
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        
+"""        
         # Se o meteoro passar do final da tela, volta para cima
         if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 20:
             self.rect.y = random.randrange(WIDTH - self.rect.width)
             self.rect.x = random.randrange(-100, -40)
             self.speedx = random.randrange(-5, 0)
             self.speedy = 0
-
+"""
       
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
