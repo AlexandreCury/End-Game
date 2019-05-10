@@ -93,6 +93,11 @@ class Mob(pygame.sprite.Sprite):
         self.rect.y = random.randrange(48,550)
         # Sorteia um lugar inicial em x
         self.rect.x = 1000
+
+        # Sorteia um lugar inicial em x
+        self.rect.x = WIDTH
+        # Sorteia um lugar inicial em y
+        self.rect.y = random.randrange(HEIGHT - 80)
         # Sorteia uma velocidade inicial
         self.speedx = -5
         self.speedy = 0
@@ -103,9 +108,9 @@ class Mob(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 """        
         # Se o meteoro passar do final da tela, volta para cima
-        if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 20:
-            self.rect.y = random.randrange(WIDTH - self.rect.width)
-            self.rect.x = random.randrange(-100, -40)
+        if self.rect.top > HEIGHT + 80 or self.rect.left < -80 or self.rect.right > WIDTH + 20:
+            self.rect.x = random.randrange(WIDTH + 40, WIDTH + 100)
+            self.rect.y = random.randrange(HEIGHT - 80)
             self.speedx = random.randrange(-5, 0)
             self.speedy = 0
 """
