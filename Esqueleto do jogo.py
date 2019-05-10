@@ -7,6 +7,7 @@ Created on Tue May  7 16:59:18 2019
 
 # Importando as bibliotecas necessárias.
 import pygame
+import random
 from os import path
 
 # Estabelece a pasta que contem as figuras.
@@ -67,8 +68,47 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = HEIGHT
         if self.rect.left < 0:
             self.rect.left = 0
-            
 
+class Mob(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "plane.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (80, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = random.randrange(WIDTH - self.rect.width)
+        # Sorteia um lugar inicial em x
+        self.rect.x = 1400
+        # Sorteia uma velocidade inicial
+        self.speedx = random.randrange(-5, 0)
+        self.speedy = 0
+
+        # Metodo que atualiza a posição da navinha
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        # Se o meteoro passar do final da tela, volta para cima
+        if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 20:
+            self.rect.y = random.randrange(WIDTH - self.rect.width)
+            self.rect.x = random.randrange(-100, -40)
+            self.speedx = random.randrange(-5, 0)
+            self.speedy = 0
+            
 
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -89,6 +129,14 @@ player = Player()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
+# Cria um grupo só dos meteoros
+mobs = pygame.sprite.Group()
+
+# Cria 8 meteoros e adiciona no grupo meteoros
+for i in range(3):
+    m = Mob()
+    all_sprites.add(m)
+    mobs.add(m)
 
 # Comando para evitar travamentos.
 try:
