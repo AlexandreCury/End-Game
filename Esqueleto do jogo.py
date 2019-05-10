@@ -89,11 +89,6 @@ class Mob(pygame.sprite.Sprite):
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
-        # Sorteia um lugar inicial em y
-        self.rect.y = random.randrange(48,550)
-        # Sorteia um lugar inicial em x
-        self.rect.x = 1000
-
         # Sorteia um lugar inicial em x
         self.rect.x = WIDTH
         # Sorteia um lugar inicial em y
@@ -105,7 +100,43 @@ class Mob(pygame.sprite.Sprite):
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85 / 2)
 
-        # Metodo que atualiza a posição da navinha
+        # Metodo que atualiza a posição do avião
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+class Bomb(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self):
+        
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "Bomb.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (80, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = WIDTH/2
+        # Sorteia um lugar inicial em y
+        self.rect.y = 0
+        # Sorteia uma velocidade inicial
+        self.speedx = -5
+        self.speedy = 6
+
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85 / 2)
+
+        # Metodo que atualiza a posição da bomba
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -129,9 +160,11 @@ player = Player()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
-# Cria um grupo só dos meteoros
+# Cria um grupo só dos aviões
 mobs = pygame.sprite.Group()
 
+# Cria um grupo só das bombas
+bomb = pygame.sprite.Group()
 
 # Comando para evitar travamentos.
 try:
@@ -150,6 +183,11 @@ try:
             m = Mob()
             all_sprites.add(m)
             mobs.add(m)
+        
+        if sorteia_eventos == 5:
+            b = Bomb()
+            all_sprites.add(b)
+            bomb.add(b)
 
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
