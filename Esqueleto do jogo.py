@@ -106,14 +106,6 @@ class Mob(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-"""        
-        # Se o meteoro passar do final da tela, volta para cima
-        if self.rect.top > HEIGHT + 80 or self.rect.left < -80 or self.rect.right > WIDTH + 20:
-            self.rect.x = random.randrange(WIDTH + 40, WIDTH + 100)
-            self.rect.y = random.randrange(HEIGHT - 80)
-            self.speedx = random.randrange(-5, 0)
-            self.speedy = 0
-"""
       
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -137,11 +129,6 @@ all_sprites.add(player)
 # Cria um grupo só dos meteoros
 mobs = pygame.sprite.Group()
 
-# Cria 8 meteoros e adiciona no grupo meteoros
-for i in range(3):
-    m = Mob()
-    all_sprites.add(m)
-    mobs.add(m)
 
 # Comando para evitar travamentos.
 try:
@@ -153,7 +140,14 @@ try:
         
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
-        
+
+        # Sortear quando vai ocorrer um evento (avião, bomba, etc)
+        sorteia_eventos = random.randint(0,30)
+        if sorteia_eventos == 1:
+            m = Mob()
+            all_sprites.add(m)
+            mobs.add(m)
+
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             
