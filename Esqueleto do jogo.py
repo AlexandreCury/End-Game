@@ -39,11 +39,11 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #Carregando a imagem de fundo
-        player_img = pygame.image.load(path.join(img_dir, "playerShip1_orange.png")).convert()
+        player_img = pygame.image.load(path.join(img_dir, "Dog.png")).convert()
         self.image = player_img
         
         #Diminuindo o tamanho da imagem
-        self.image = pygame.transform.scale(player_img, (50,38))
+        self.image = pygame.transform.scale(player_img, (100,68))
         
         #Deixando transparente.
         self.image.set_colorkey(BLACK)
@@ -112,9 +112,9 @@ try:
             if event.type == pygame.KEYDOWN:
                 # Dependendo da tecla, altera a velocidade
                 if event.key == pygame.K_DOWN:
-                    player.speedy = -8
-                if event.key == pygame.K_UP:
                     player.speedy = 8
+                if event.key == pygame.K_UP:
+                    player.speedy = -8
                     
             #Verifica se solto alguma tecla
             if event.type == pygame.KEYUP:
