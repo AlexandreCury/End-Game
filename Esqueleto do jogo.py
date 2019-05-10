@@ -14,8 +14,8 @@ from os import path
 img_dir = path.join(path.dirname(__file__), 'img')
 
 # Dados gerais do jogo.
-WIDTH = 1400 # Largura da tela
-HEIGHT = 750 # Altura da tela
+WIDTH = 1200 # Largura da tela
+HEIGHT = 600 # Altura da tela
 FPS = 60 # Frames por segundo
 
 # Define algumas variáveis com as cores básicas
@@ -64,10 +64,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         # Mantem dentro da tela
-        if self.rect.right > HEIGHT:
-            self.rect.right = HEIGHT
-        if self.rect.left < 0:
-            self.rect.left = 0
+        if self.rect.bottom > HEIGHT:
+            self.rect.bottom = HEIGHT
+        if self.rect.top < 0:
+            self.rect.top = 0
 
 class Mob(pygame.sprite.Sprite):
     
