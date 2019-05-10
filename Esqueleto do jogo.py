@@ -90,7 +90,7 @@ class Mob(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # Sorteia um lugar inicial em y
-        self.rect.y = random.randrange(WIDTH - self.rect.width)
+        self.rect.y = 725
         # Sorteia um lugar inicial em x
         self.rect.x = 1400
         # Sorteia uma velocidade inicial
@@ -108,8 +108,8 @@ class Mob(pygame.sprite.Sprite):
             self.rect.x = random.randrange(-100, -40)
             self.speedx = random.randrange(-5, 0)
             self.speedy = 0
-            
 
+      
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
