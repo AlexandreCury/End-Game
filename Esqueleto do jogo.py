@@ -52,19 +52,19 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         #Centraliza embaixo da tela
-        self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+        self.rect.centery = WIDTH / 10
+        self.rect.bottom = HEIGHT - 375
         
         #Velocidade da nave
-        self.speedx = 0
+        self.speedy = 0
         
     # Metodo que atualiza a posição da navinha
     def update(self):
-        self.rect.x += self.speedx
+        self.rect.y += self.speedy
         
         # Mantem dentro da tela
-        if self.rect.right > WIDTH:
-            self.rect.right = WIDTH
+        if self.rect.right > HEIGHT:
+            self.rect.right = HEIGHT
         if self.rect.left < 0:
             self.rect.left = 0
             
@@ -111,18 +111,18 @@ try:
             #Verifica se apertou alguma tela 
             if event.type == pygame.KEYDOWN:
                 # Dependendo da tecla, altera a velocidade
-                if event.key == pygame.K_LEFT:
-                    player.speedx = -8
-                if event.key == pygame.K_RIGHT:
-                    player.speedx = 8
+                if event.key == pygame.K_DOWN:
+                    player.speedy = -8
+                if event.key == pygame.K_UP:
+                    player.speedy = 8
                     
             #Verifica se solto alguma tecla
             if event.type == pygame.KEYUP:
                 # Dependendo da tecla, altera a velocidade
-                if event.key == pygame.K_LEFT:
-                    player.speedx = 0
-                if event.key == pygame.K_RIGHT:
-                    player.speedx = 0
+                if event.key == pygame.K_DOWN:
+                    player.speedy = 0
+                if event.key == pygame.K_UP:
+                    player.speedy = 0
                     
             # Depois de processar os eventos.
             # Atualiza a ação de cada sprite.
