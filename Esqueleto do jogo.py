@@ -16,7 +16,7 @@ img_dir = path.join(path.dirname(__file__), 'img')
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
-FPS = 60 # Frames por segundo
+FPS = 40 # Frames por segundo
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -78,7 +78,7 @@ class Mob(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "plane.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "plane2.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (80, 48))
@@ -114,7 +114,7 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "Bomb.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "Bomb2.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (80, 48))
@@ -218,7 +218,7 @@ try:
 
         # Verifica se houve colisão
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle) #substituir mobs por bomb p poder matar
         if hits:
             # Toca o som da colisão
             #boom_sound.play()
