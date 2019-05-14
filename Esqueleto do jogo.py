@@ -16,7 +16,7 @@ img_dir = path.join(path.dirname(__file__), 'img')
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
-FPS = 60 # Frames por segundo
+FPS = 50 # Frames por segundo
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
