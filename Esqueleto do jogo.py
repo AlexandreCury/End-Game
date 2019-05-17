@@ -16,7 +16,7 @@ img_dir = path.join(path.dirname(__file__), 'img')
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
-FPS = 40 # Frames por segundo
+FPS = 50 # Frames por segundo
 
 
 # Define algumas variáveis com as cores básicas
@@ -103,7 +103,11 @@ class Mob(pygame.sprite.Sprite):
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
+
 #        self.radius = int(self.rect.width * .85 / 2)
+
+        self.radius = int(self.rect.width * .85 / 85)
+
 
         # Metodo que atualiza a posição do avião
     def update(self):
@@ -119,7 +123,7 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "Bomb2.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "Bomb.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (80, 48))
@@ -139,7 +143,7 @@ class Bomb(pygame.sprite.Sprite):
         self.speedy = 6
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85)
+        self.radius = int(self.rect.width * .85/10)
 
         # Metodo que atualiza a posição da bomba
     def update(self):
@@ -193,13 +197,14 @@ try:
         
             
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
-        sorteia_eventos = random.randint(0,30)
-        if sorteia_eventos == 1:
+        sorteia_eventos = random.randint(0,100)
+
+        if sorteia_eventos == 1 or sorteia_eventos == 57 or sorteia_eventos == 80:
             m = Mob()
             all_sprites.add(m)
             mobs.add(m)
         
-        if sorteia_eventos == 5:
+        if sorteia_eventos == 46:
             b = Bomb()
             all_sprites.add(b)
             bomb.add(b)
@@ -227,13 +232,30 @@ try:
                 if event.key == pygame.K_UP:
                     player.speedy = 0
                     
+            if event.type == pygame.KEYDOWN:
+                # Dependendo da tecla, altera a velocidade
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 8
+                if event.key == pygame.K_LEFT:
+                    player.speedx = -8
+                    
+            if event.type == pygame.KEYUP:
+                # Dependendo da tecla, altera a velocidade
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 0
+                if event.key == pygame.K_LEFT:
+                    player.speedx = 0
+                    
             # Depois de processar os eventos.
             # Atualiza a ação de cada sprite.
         all_sprites.update()
 
         # Verifica se houve colisão
+
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
         hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
+
+
         if hits:
             # Toca o som da colisão
             #boom_sound.play()
