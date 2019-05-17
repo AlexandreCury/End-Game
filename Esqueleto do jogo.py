@@ -16,11 +16,7 @@ img_dir = path.join(path.dirname(__file__), 'img')
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
-<<<<<<< HEAD
 FPS = 50 # Frames por segundo
-=======
-FPS = 40 # Frames por segundo
->>>>>>> fb912d129043a49539775b0c4bb395aff004544b
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -118,7 +114,7 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "Bomb2.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "Bomb.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (80, 48))
@@ -215,6 +211,20 @@ try:
                     player.speedy = 0
                 if event.key == pygame.K_UP:
                     player.speedy = 0
+                    
+            if event.type == pygame.KEYDOWN:
+                # Dependendo da tecla, altera a velocidade
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 8
+                if event.key == pygame.K_LEFT:
+                    player.speedx = -8
+                    
+            if event.type == pygame.KEYUP:
+                # Dependendo da tecla, altera a velocidade
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 0
+                if event.key == pygame.K_LEFT:
+                    player.speedx = 0
                     
             # Depois de processar os eventos.
             # Atualiza a ação de cada sprite.
