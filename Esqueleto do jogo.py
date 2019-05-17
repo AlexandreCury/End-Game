@@ -178,13 +178,14 @@ try:
         clock.tick(FPS)
 
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
-        sorteia_eventos = random.randint(0,60)
-        if sorteia_eventos == 1 or sorteia_eventos == 57 or sorteia_eventos == 50:
+        sorteia_eventos = random.randint(0,100)
+
+        if sorteia_eventos == 1 or sorteia_eventos == 57 or sorteia_eventos == 80:
             m = Mob()
             all_sprites.add(m)
             mobs.add(m)
         
-        if sorteia_eventos == 5:
+        if sorteia_eventos == 46:
             b = Bomb()
             all_sprites.add(b)
             bomb.add(b)
