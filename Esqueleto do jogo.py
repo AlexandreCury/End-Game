@@ -253,7 +253,7 @@ try:
         # Verifica se houve colisão
 
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
-        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
+        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
 
 
         if hits:
