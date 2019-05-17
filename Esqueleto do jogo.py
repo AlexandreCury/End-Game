@@ -18,6 +18,7 @@ WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
 FPS = 40 # Frames por segundo
 
+
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -41,7 +42,9 @@ class Player(pygame.sprite.Sprite):
         
         #Carregando a imagem de fundo
         player_img = pygame.image.load(path.join(img_dir, "Dog.png")).convert()
-        self.image = player_img
+#        self.image = player_img_mask
+        player_img_mask = pygame.mask.from_surface(player_img)
+        self.image = player_img_mask
         
         #Diminuindo o tamanho da imagem
         self.image = pygame.transform.scale(player_img, (100,68))
@@ -79,6 +82,8 @@ class Mob(pygame.sprite.Sprite):
         
         # Carregando a imagem de fundo.
         mob_img = pygame.image.load(path.join(img_dir, "plane2.png")).convert()
+        mob_img_mask = pygame.mask.from_surface(mob_img)
+        self.image = mob_img_mask
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (80, 48))
@@ -98,7 +103,7 @@ class Mob(pygame.sprite.Sprite):
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85 / 2)
+#        self.radius = int(self.rect.width * .85 / 2)
 
         # Metodo que atualiza a posição do avião
     def update(self):
@@ -140,6 +145,7 @@ class Bomb(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+        
       
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -166,8 +172,16 @@ mobs = pygame.sprite.Group()
 # Cria um grupo só das bombas
 bomb = pygame.sprite.Group()
 
+#Velocidade com que o mapa se move
+VEL_MAP = -3
+
 # Comando para evitar travamentos.
 try:
+    
+    #Variavel mudança de mapa
+    
+    X = 0
+    X2 = WIDTH
     
     # Loop principal.
     running = True
@@ -176,7 +190,8 @@ try:
         
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
-
+        
+            
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
         sorteia_eventos = random.randint(0,30)
         if sorteia_eventos == 1:
@@ -217,8 +232,8 @@ try:
         all_sprites.update()
 
         # Verifica se houve colisão
-        hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle) #substituir mobs por bomb p poder matar
+        hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
+        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
         if hits:
             # Toca o som da colisão
             #boom_sound.play()
@@ -232,7 +247,27 @@ try:
     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
-        screen.blit(background, background_rect)
+        #screen.blit(background, background_rect)
+        
+        
+        cenario_repetido = pygame.Rect(X,0,background_rect.height, background_rect.width)
+        cenario_repetido2 = pygame.Rect(X2,0,background_rect.height, background_rect.width)
+#        cenario_repetido3 = pygame.Rect()
+        
+        
+        screen.blit(background, cenario_repetido)
+        X-=5
+    
+        
+        if cenario_repetido.right == WIDTH:
+            cenario_copia = cenario_repetido2.copy()
+        
+        diff = X + (background.get_rect().width - WIDTH)
+        X2 = WIDTH
+        X2 += diff
+        screen.blit(background, (X2,0))
+        
+        
         all_sprites.draw(screen)
         
         # Depois de desenhar tudo, inverte o display.
