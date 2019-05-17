@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.image = player_img
         
         #Diminuindo o tamanho da imagem
-        self.image = pygame.transform.scale(player_img, (100,68))
+        self.image = pygame.transform.scale(player_img, (80,48))
         
         #Deixando transparente.
         self.image.set_colorkey(BLACK)
@@ -98,7 +98,7 @@ class Mob(pygame.sprite.Sprite):
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85 / 2)
+        self.radius = int(self.rect.width * .85 / 85)
 
         # Metodo que atualiza a posição do avião
     def update(self):
@@ -134,7 +134,7 @@ class Bomb(pygame.sprite.Sprite):
         self.speedy = 6
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85)
+        self.radius = int(self.rect.width * .85/10)
 
         # Metodo que atualiza a posição da bomba
     def update(self):
@@ -178,8 +178,8 @@ try:
         clock.tick(FPS)
 
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
-        sorteia_eventos = random.randint(0,30)
-        if sorteia_eventos == 1:
+        sorteia_eventos = random.randint(0,60)
+        if sorteia_eventos == 1 or sorteia_eventos == 57 or sorteia_eventos == 50:
             m = Mob()
             all_sprites.add(m)
             mobs.add(m)
@@ -218,7 +218,7 @@ try:
 
         # Verifica se houve colisão
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-        hits_bomb = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle) #substituir mobs por bomb p poder matar
+        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_circle) #substituir mobs por bomb p poder matar
         if hits:
             # Toca o som da colisão
             #boom_sound.play()
