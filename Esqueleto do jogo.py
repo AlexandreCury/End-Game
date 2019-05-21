@@ -9,7 +9,6 @@ Created on Tue May  7 16:59:18 2019
 import pygame
 import random
 from os import path
-
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 
@@ -17,7 +16,6 @@ img_dir = path.join(path.dirname(__file__), 'img')
 WIDTH = 1200 # Largura da tela
 HEIGHT = 600 # Altura da tela
 FPS = 50 # Frames por segundo
-
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -61,10 +59,12 @@ class Player(pygame.sprite.Sprite):
         
         #Velocidade da nave
         self.speedy = 0
+        self.speedx = 0
         
     # Metodo que atualiza a posição da navinha
     def update(self):
         self.rect.y += self.speedy
+        self.rect.x += self.speedx
         
         # Mantem dentro da tela
         if self.rect.bottom > HEIGHT:
@@ -123,7 +123,7 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "cu.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "bomba.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (70, 48))
@@ -152,10 +152,10 @@ class Bomb(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
+        
       
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-
 # Nome do jogo
 pygame.display.set_caption("End Game")
 
