@@ -99,7 +99,7 @@ class Mob(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = random.randrange(HEIGHT - 80)
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = -7
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -135,12 +135,14 @@ class Bomb(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # Sorteia um lugar inicial em x
-        self.rect.x = 400 #random.randrange(400 - 500)
+        self.rect.x = WIDTH
+        
         # Sorteia um lugar inicial em y
-        self.rect.y = 0
+        self.rect.y = random.randrange(HEIGHT - 80)
+        
         # Sorteia uma velocidade inicial
-        self.speedx = -6
-        self.speedy = 6
+        self.speedx = -5
+        self.speedy=0
 
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = int(self.rect.width * .85/10)
@@ -177,7 +179,7 @@ mobs = pygame.sprite.Group()
 bomb = pygame.sprite.Group()
 
 #Velocidade com que o mapa se move
-VEL_MAP = -3
+VEL_MAP = -2
 
 # Comando para evitar travamentos.
 try:
