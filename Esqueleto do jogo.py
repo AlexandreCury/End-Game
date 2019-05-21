@@ -99,7 +99,7 @@ class Mob(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = random.randrange(HEIGHT - 80)
         # Sorteia uma velocidade inicial
-        self.speedx = -7
+        self.speedx = -15
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -123,10 +123,10 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "Bomb.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "cu.png")).convert()
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(mob_img, (80, 48))
+        self.image = pygame.transform.scale(mob_img, (70, 48))
         
         # Deixando transparente.
         self.image.set_colorkey(BLACK)
