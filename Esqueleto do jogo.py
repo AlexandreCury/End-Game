@@ -11,6 +11,7 @@ import random
 from os import path
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
+snd_dir = path.join(path.dirname(__file__), 'snd')
 
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
@@ -104,7 +105,7 @@ class Mob(pygame.sprite.Sprite):
 
         # Melhora a colisão estabelecendo um raio de um circulo
 
-#        self.radius = int(self.rect.width * .85 / 2)
+        #self.radius = int(self.rect.width * .85 / 2)
 
         self.radius = int(self.rect.width * .85 / 85)
 
@@ -151,7 +152,44 @@ class Bomb(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+class Coins(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self):
         
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "Coins.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (70, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = WIDTH
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = random.randrange(HEIGHT - 80)
+        
+        # Sorteia uma velocidade inicial
+        self.speedx = -5
+        self.speedy=0
+
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85/100)
+
+        # Metodo que atualiza a posição da bomba
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
         
       
 # Tamanho da tela.
@@ -180,6 +218,9 @@ mobs = pygame.sprite.Group()
 
 # Cria um grupo só das bombas
 bomb = pygame.sprite.Group()
+boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+# Cria um grupo só das moedas
+coins = pygame.sprite.Group()
 
 #Velocidade com que o mapa se move
 VEL_MAP = -5
@@ -196,10 +237,8 @@ try:
     running = True
     while running:
         
-        
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
-        
             
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
         sorteia_eventos = random.randint(0,100)
@@ -214,6 +253,13 @@ try:
             all_sprites.add(b)
             bomb.add(b)
 
+        if sorteia_eventos == 30 or sorteia_eventos == 90:
+            c = Coins()
+            all_sprites.add(c)
+            coins.add(c)
+
+        # Conta moedas
+        moedas = 0
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             
@@ -258,7 +304,8 @@ try:
         # Verifica se houve colisão
 
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
-        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
+        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask)
+        hits_coins = pygame.sprite.spritecollide(player, coins, True, pygame.sprite.collide_mask)
 
 
         if hits:
@@ -271,10 +318,18 @@ try:
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
             running = False
+        
+        if hits_coins:
+            # Toca o som da colisão
+            boom_sound.play()
+            moedas += 1
+
+
     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         
+<<<<<<< HEAD
 
         # Atualiza a posição da imagem de fundo.
 
@@ -287,6 +342,16 @@ try:
             background_rect.x += background_rect.width
 
         screen.blit(background, background_rect)
+=======
+        cenario_repetido = pygame.Rect(X,0,background_rect.height, background_rect.width)
+        cenario_repetido2 = pygame.Rect(X2,0,background_rect.height, background_rect.width)
+        #cenario_repetido3 = pygame.Rect()
+        
+        
+        screen.blit(background, cenario_repetido)
+        X-=5
+    
+>>>>>>> 99581a3d0d360884cea4dcdf687b1960dc13e725
         
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
