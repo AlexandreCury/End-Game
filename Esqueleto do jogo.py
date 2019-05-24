@@ -11,6 +11,7 @@ import random
 from os import path
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
+snd_dir = path.join(path.dirname(__file__), 'snd')
 
 # Dados gerais do jogo.
 WIDTH = 1200 # Largura da tela
@@ -104,7 +105,7 @@ class Mob(pygame.sprite.Sprite):
 
         # Melhora a colisão estabelecendo um raio de um circulo
 
-#        self.radius = int(self.rect.width * .85 / 2)
+        #self.radius = int(self.rect.width * .85 / 2)
 
         self.radius = int(self.rect.width * .85 / 85)
 
@@ -183,7 +184,7 @@ class Coins(pygame.sprite.Sprite):
         self.speedy=0
 
         # Melhora a colisão estabelecendo um raio de um circulo
-        self.radius = int(self.rect.width * .85/10)
+        self.radius = int(self.rect.width * .85/100)
 
         # Metodo que atualiza a posição da bomba
     def update(self):
@@ -214,6 +215,9 @@ mobs = pygame.sprite.Group()
 
 # Cria um grupo só das bombas
 bomb = pygame.sprite.Group()
+boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+# Cria um grupo só das moedas
+coins = pygame.sprite.Group()
 
 #Velocidade com que o mapa se move
 VEL_MAP = -2
@@ -230,10 +234,8 @@ try:
     running = True
     while running:
         
-        
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
-        
             
         # Sortear quando vai ocorrer um evento (avião, bomba, etc)
         sorteia_eventos = random.randint(0,100)
@@ -251,7 +253,7 @@ try:
         if sorteia_eventos == 30 or sorteia_eventos == 90:
             c = Coins()
             all_sprites.add(c)
-            mobs.add(c)
+            coins.add(c)
 
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
@@ -298,6 +300,7 @@ try:
 
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
         hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
+        hits_coins = pygame.sprite.spritecollide(player, coins, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
 
 
         if hits:
@@ -310,6 +313,12 @@ try:
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
             running = False
+        
+        if hits_coins:
+            # Toca o som da colisão
+            boom_sound.play()
+            #running = False
+
     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
