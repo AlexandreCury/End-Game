@@ -340,7 +340,7 @@ try:
             background_rect.x += background_rect.width
 
         screen.blit(background, background_rect)
-        
+
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
