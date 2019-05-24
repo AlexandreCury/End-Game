@@ -255,6 +255,8 @@ try:
             all_sprites.add(c)
             coins.add(c)
 
+        # Conta moedas
+        moedas = 0
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             
@@ -299,8 +301,8 @@ try:
         # Verifica se houve colisão
 
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
-        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
-        hits_coins = pygame.sprite.spritecollide(player, coins, False, pygame.sprite.collide_mask) #substituir mobs por bomb p poder matar
+        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask)
+        hits_coins = pygame.sprite.spritecollide(player, coins, False, pygame.sprite.collide_mask)
 
 
         if hits:
@@ -317,7 +319,9 @@ try:
         if hits_coins:
             # Toca o som da colisão
             boom_sound.play()
-            #running = False
+            moedas += 1
+            #all_sprites.remove(c)
+
 
     
         # A cada loop, redesenha o fundo e os sprites
@@ -327,7 +331,7 @@ try:
         
         cenario_repetido = pygame.Rect(X,0,background_rect.height, background_rect.width)
         cenario_repetido2 = pygame.Rect(X2,0,background_rect.height, background_rect.width)
-#        cenario_repetido3 = pygame.Rect()
+        #cenario_repetido3 = pygame.Rect()
         
         
         screen.blit(background, cenario_repetido)
