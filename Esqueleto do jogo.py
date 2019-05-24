@@ -151,7 +151,44 @@ class Bomb(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+class Coins(pygame.sprite.Sprite):
+    
+    # Construtor da classe.
+    def __init__(self):
         
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "Coins.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (70, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        # Detalhes sobre o posicionamento.
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = WIDTH
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = random.randrange(HEIGHT - 80)
+        
+        # Sorteia uma velocidade inicial
+        self.speedx = -5
+        self.speedy=0
+
+        # Melhora a colisão estabelecendo um raio de um circulo
+        self.radius = int(self.rect.width * .85/10)
+
+        # Metodo que atualiza a posição da bomba
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
         
       
 # Tamanho da tela.
@@ -210,6 +247,11 @@ try:
             b = Bomb()
             all_sprites.add(b)
             bomb.add(b)
+
+        if sorteia_eventos == 30 or sorteia_eventos == 90:
+            c = Coins()
+            all_sprites.add(c)
+            mobs.add(c)
 
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
