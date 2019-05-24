@@ -329,7 +329,6 @@ try:
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         
-<<<<<<< HEAD
 
         # Atualiza a posição da imagem de fundo.
 
@@ -342,17 +341,9 @@ try:
             background_rect.x += background_rect.width
 
         screen.blit(background, background_rect)
-=======
-        cenario_repetido = pygame.Rect(X,0,background_rect.height, background_rect.width)
-        cenario_repetido2 = pygame.Rect(X2,0,background_rect.height, background_rect.width)
-        #cenario_repetido3 = pygame.Rect()
-        
-        
-        screen.blit(background, cenario_repetido)
-        X-=5
+
     
->>>>>>> 99581a3d0d360884cea4dcdf687b1960dc13e725
-        
+        # Cenário infinito
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
