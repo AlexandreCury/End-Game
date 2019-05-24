@@ -166,6 +166,9 @@ clock = pygame.time.Clock()
 background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
 
+
+
+
 #Cria uma nave. O construtor será chamado automaticamente
 player = Player()
 # Cria um grupo de sprites e adiciona a nave.
@@ -179,7 +182,7 @@ mobs = pygame.sprite.Group()
 bomb = pygame.sprite.Group()
 
 #Velocidade com que o mapa se move
-VEL_MAP = -2
+VEL_MAP = -5
 
 # Comando para evitar travamentos.
 try:
@@ -271,25 +274,24 @@ try:
     
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
-        #screen.blit(background, background_rect)
         
+
+        # Atualiza a posição da imagem de fundo.
+
+        background_rect.x += VEL_MAP
+
+        # Se o fundo saiu da janela, faz ele voltar para dentro.
+
+        if background_rect.right < 0:
+
+            background_rect.x += background_rect.width
+
+        screen.blit(background, background_rect)
         
-        cenario_repetido = pygame.Rect(X,0,background_rect.height, background_rect.width)
-        cenario_repetido2 = pygame.Rect(X2,0,background_rect.height, background_rect.width)
-#        cenario_repetido3 = pygame.Rect()
+        background_rect2 = background_rect.copy()
+        background_rect2.x += background_rect2.width
+        screen.blit(background, background_rect2)
         
-        
-        screen.blit(background, cenario_repetido)
-        X-=5
-    
-        
-        if cenario_repetido.right == WIDTH:
-            cenario_copia = cenario_repetido2.copy()
-        
-        diff = X + (background.get_rect().width - WIDTH)
-        X2 = WIDTH
-        X2 += diff
-        screen.blit(background, (X2,0))
         
         
         all_sprites.draw(screen)
