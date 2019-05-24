@@ -302,7 +302,7 @@ try:
 
         hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
         hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask)
-        hits_coins = pygame.sprite.spritecollide(player, coins, False, pygame.sprite.collide_mask)
+        hits_coins = pygame.sprite.spritecollide(player, coins, True, pygame.sprite.collide_mask)
 
 
         if hits:
@@ -320,7 +320,6 @@ try:
             # Toca o som da colisão
             boom_sound.play()
             moedas += 1
-            #all_sprites.remove(c)
 
 
     
