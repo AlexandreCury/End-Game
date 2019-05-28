@@ -273,8 +273,8 @@ clock = pygame.time.Clock()
 background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
 
-#musica
-pygame.mixer.music.load(path.join(snd_dir,"Pinball-Gremlins.ogg"))
+#musica de fundo do jogo
+musica_fundo = pygame.mixer.music.load(path.join(snd_dir,"Pinball-Gremlins.ogg"))
 pygame.mixer.music.set_volume(0.4)
 
 #Cria uma nave. O construtor será chamado automaticamente
@@ -424,6 +424,7 @@ try:
             boom_sound.play()
             moedas += 1
             #coins.remove()
+            
         for m in hits_coins:
             x=m.rect.centerx
             y=m.rect.centery
@@ -438,6 +439,7 @@ try:
                 life +=1
             else:
                 moedas = moedas_por_vida
+                
         for m in hits:
             x=m.rect.centerx
             y=m.rect.centery
