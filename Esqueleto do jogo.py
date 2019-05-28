@@ -232,10 +232,16 @@ try:
     
     X = 0
     X2 = WIDTH
-    
+
+    # Vida
+    life = 1
+
+    # Moedas
+    moedas = 0
+
     # Loop principal.
     running = True
-    while running:
+    while life > 0:
         
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
@@ -258,8 +264,6 @@ try:
             all_sprites.add(c)
             coins.add(c)
 
-        # Conta moedas
-        moedas = 0
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             
@@ -303,8 +307,8 @@ try:
 
         # Verifica se houve colisão
 
-        hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_mask)
-        hits_bomb = pygame.sprite.spritecollide(player, bomb, False, pygame.sprite.collide_mask)
+        hits = pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_mask)
+        hits_bomb = pygame.sprite.spritecollide(player, bomb, True, pygame.sprite.collide_mask)
         hits_coins = pygame.sprite.spritecollide(player, coins, True, pygame.sprite.collide_mask)
 
 
@@ -312,20 +316,23 @@ try:
             # Toca o som da colisão
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
-            running = False
+            life -= 1
         if hits_bomb:
             # Toca o som da colisão
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
-            running = False
+            life -= 1
         
         if hits_coins:
             # Toca o som da colisão
             boom_sound.play()
             moedas += 1
+        
+        # Troca moedas por vida
+        if moedas == 2:
+            life +=1
+            moedas = 0
 
-
-    
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
 
