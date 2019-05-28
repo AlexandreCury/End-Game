@@ -352,10 +352,6 @@ try:
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
         
-<<<<<<< HEAD
-        
-=======
->>>>>>> 300da8b2709a65adbba16838180978acbbe52c60
         all_sprites.draw(screen)
         
         # Depois de desenhar tudo, inverte o display.
