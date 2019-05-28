@@ -200,7 +200,7 @@ class Explosion(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "explosion-2283147_960_720")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "explosion-2283147_960_720.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (70, 48))
@@ -217,10 +217,47 @@ class Explosion(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = y
         
+        self.tempo = pygame.time.get_ticks()
+        
         #atualiza a função
-        def update(self):
-            self.rect.x += self.speedx
-            self.rect.y += self.speedy
+    def update(self):
+        now =  pygame.time.get_ticks()
+        if now - self.tempo > 1000:
+            self.kill()
+            
+class Money(pygame.sprite.Sprite):
+    
+    def __init__(self,x,y):
+        # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "cifrao.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (70, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        #posicao
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = x
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = y
+        
+        self.tempo = pygame.time.get_ticks()
+        
+        #atualiza a função
+    def update(self):
+        now =  pygame.time.get_ticks()
+        if now - self.tempo > 500:
+            self.kill()
+        
+                
         
       
 # Tamanho da tela.
@@ -234,6 +271,10 @@ clock = pygame.time.Clock()
 # Carrega o fundo do jogo
 background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
+
+#musica
+pygame.mixer.music.load(path.join(snd_dir,"Pinball-Gremlins.ogg"))
+pygame.mixer.music.set_volume(0.4)
 
 #Cria uma nave. O construtor será chamado automaticamente
 player = Player()
@@ -251,6 +292,12 @@ boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
 
 # Cria um grupo só das moedas
 coins = pygame.sprite.Group()
+
+# cria um grupo só das explosoes
+explosions = pygame.sprite.Group()
+
+#cria um grupo dos cifores
+moneys = pygame.sprite.Group()
 
 #Velocidade com que o mapa se move
 VEL_MAP = -5
@@ -349,15 +396,26 @@ try:
             # Toca o som da colisão
             #boom_sound.play()
             #demonstra a imagem da explosão
-            
             #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
+        #chama a explosão com a bomba
+        for m in hits_bomb:
+            x=m.rect.centerx
+            y=m.rect.centery
+            e=Explosion(x,y)
+            all_sprites.add(e)
+            
         
         if hits_coins:
             # Toca o som da colisão
             boom_sound.play()
             moedas += 1
             #coins.remove()
+        for m in hits_coins:
+            x=m.rect.centerx
+            y=m.rect.centery
+            j=Money(x,y)
+            all_sprites.add(j)
         
         # Troca moedas por vida
         moedas_por_vida = 2
@@ -371,6 +429,7 @@ try:
             x=m.rect.centerx
             y=m.rect.centery
             e=Explosion(x,y)
+            all_sprites.add(e)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
