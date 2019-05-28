@@ -344,15 +344,18 @@ try:
 
         # Se o fundo saiu da janela, faz ele voltar para dentro.
         if background_rect.right < 0:
-
             background_rect.x += background_rect.width
-
+            
         screen.blit(background, background_rect)
 
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
         
+<<<<<<< HEAD
+        
+=======
+>>>>>>> 300da8b2709a65adbba16838180978acbbe52c60
         all_sprites.draw(screen)
         
         # Depois de desenhar tudo, inverte o display.
