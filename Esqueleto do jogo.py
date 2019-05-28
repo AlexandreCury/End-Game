@@ -54,7 +54,7 @@ class Player(pygame.sprite.Sprite):
         #Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
         
-        #Centraliza embaixo da tela
+        # Posiciona o dog
         self.rect.centery = WIDTH / 10
         self.rect.bottom = HEIGHT - 375
         
@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
         self.speedy = 0
         self.speedx = 0
         
-    # Metodo que atualiza a posição da navinha
+    # Metodo que atualiza a posição do dog
     def update(self):
         self.rect.y += self.speedy
         self.rect.x += self.speedx
@@ -72,6 +72,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT
         if self.rect.top < 0:
             self.rect.top = 0
+        if self.rect.right < 110 or self.rect.right > 400:
+            self.speedx = 0
 
 class Mob(pygame.sprite.Sprite):
     
@@ -104,13 +106,10 @@ class Mob(pygame.sprite.Sprite):
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
-
-        #self.radius = int(self.rect.width * .85 / 2)
-
         self.radius = int(self.rect.width * .85 / 85)
 
 
-        # Metodo que atualiza a posição do avião
+    # Metodo que atualiza a posição do avião
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -204,11 +203,9 @@ clock = pygame.time.Clock()
 background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
 
-
-
-
 #Cria uma nave. O construtor será chamado automaticamente
 player = Player()
+
 # Cria um grupo de sprites e adiciona a nave.
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
@@ -219,6 +216,7 @@ mobs = pygame.sprite.Group()
 # Cria um grupo só das bombas
 bomb = pygame.sprite.Group()
 boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+
 # Cria um grupo só das moedas
 coins = pygame.sprite.Group()
 
@@ -229,7 +227,6 @@ VEL_MAP = -5
 try:
     
     #Variavel mudança de mapa
-    
     X = 0
     X2 = WIDTH
 
@@ -240,7 +237,6 @@ try:
     moedas = 0
 
     # Loop principal.
-    running = True
     while life > 0:
         
         # Ajusta a velocidade do jogo.
@@ -327,6 +323,7 @@ try:
             # Toca o som da colisão
             boom_sound.play()
             moedas += 1
+            #coins.remove()
         
         # Troca moedas por vida
         if moedas == 2:
@@ -337,11 +334,9 @@ try:
         screen.fill(BLACK)
 
         # Atualiza a posição da imagem de fundo.
-
         background_rect.x += VEL_MAP
 
         # Se o fundo saiu da janela, faz ele voltar para dentro.
-
         if background_rect.right < 0:
 
             background_rect.x += background_rect.width
