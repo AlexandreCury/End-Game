@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         
         #Carregando a imagem de fundo
         player_img = pygame.image.load(path.join(img_dir, "Dog.png")).convert()
-#        self.image = player_img_mask
+        #self.image = player_img_mask
         player_img_mask = pygame.mask.from_surface(player_img)
         self.image = player_img_mask
         
@@ -72,8 +72,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.right < 110 or self.rect.right > 400:
-            self.speedx = 0
+        if self.rect.right > 350:
+            self.rect.right = 350
+        if self.rect.left < 0:
+            self.rect.left = 0
 
 class Mob(pygame.sprite.Sprite):
     
