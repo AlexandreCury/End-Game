@@ -225,6 +225,12 @@ coins = pygame.sprite.Group()
 #Velocidade com que o mapa se move
 VEL_MAP = -5
 
+# Score
+score = 0
+
+#Contador
+contador = 0
+
 # Comando para evitar travamentos.
 try:
     
@@ -241,6 +247,13 @@ try:
     # Loop principal.
     while life > 0:
         
+        #contador
+        contador += 1
+
+        if contador == 100:
+            score +=1
+            contador = 0
+
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
             
