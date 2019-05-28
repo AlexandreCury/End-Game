@@ -326,9 +326,13 @@ try:
             #coins.remove()
         
         # Troca moedas por vida
-        if moedas == 2:
-            life +=1
-            moedas = 0
+        moedas_por_vida = 2
+        if moedas == moedas_por_vida:
+            if life < 3:
+                moedas = 0
+                life +=1
+            else:
+                moedas = moedas_por_vida
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
