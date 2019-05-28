@@ -331,15 +331,12 @@ try:
         
 
         # Atualiza a posição da imagem de fundo.
-
         background_rect.x += VEL_MAP
 
         # Se o fundo saiu da janela, faz ele voltar para dentro.
-
         if background_rect.right < 0:
-
             background_rect.x += background_rect.width
-
+            
         screen.blit(background, background_rect)
 
     
@@ -347,7 +344,6 @@ try:
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
-        
         
         
         all_sprites.draw(screen)
