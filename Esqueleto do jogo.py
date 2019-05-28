@@ -163,7 +163,7 @@ class Coins(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "Coins.png")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "moeda.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (70, 48))
@@ -200,7 +200,7 @@ class Explosion(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # Carregando a imagem de fundo.
-        mob_img = pygame.image.load(path.join(img_dir, "explosion-2283147_960_720")).convert()
+        mob_img = pygame.image.load(path.join(img_dir, "explosion-2283147_960_720.png")).convert()
         
         # Diminuindo o tamanho da imagem.
         self.image = pygame.transform.scale(mob_img, (70, 48))
