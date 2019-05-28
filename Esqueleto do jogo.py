@@ -192,6 +192,36 @@ class Coins(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
+class Explosion(pygame.sprite.Sprite):
+    
+    #constroi a classe
+    def __init__(self,x,y):
+         # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "explosion-2283147_960_720")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (70, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        #posicao
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = x
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = y
+        
+        #atualiza a função
+        def update(self):
+            self.rect.x += self.speedx
+            self.rect.y += self.speedy
+        
       
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -331,6 +361,8 @@ try:
         if hits_bomb:
             # Toca o som da colisão
             #boom_sound.play()
+            #demonstra a imagem da explosão
+            
             #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
         
@@ -348,6 +380,10 @@ try:
                 life +=1
             else:
                 moedas = moedas_por_vida
+        for m in hits:
+            x=m.rect.centerx
+            y=m.rect.centery
+            e=Explosion(x,y)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
