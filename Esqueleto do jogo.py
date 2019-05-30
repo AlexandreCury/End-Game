@@ -217,10 +217,15 @@ class Explosion1(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = y
         
+        self.speedx =-3
+        self.speedy=0
+        
         self.tempo = pygame.time.get_ticks()
         
         #atualiza a função
     def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
         now =  pygame.time.get_ticks()
         if now - self.tempo > 300:
             self.kill()
@@ -252,7 +257,7 @@ class Money(pygame.sprite.Sprite):
         
          # Sorteia uma velocidade inicial
         self.speedx = -3
-        self.speedy=-5
+        self.speedy=-3.5
         
         self.tempo = pygame.time.get_ticks()
         
