@@ -251,8 +251,8 @@ class Money(pygame.sprite.Sprite):
         self.rect.y = y
         
          # Sorteia uma velocidade inicial
-        self.speedx = -5
-        self.speedy=0
+        self.speedx = -3
+        self.speedy=-5
         
         self.tempo = pygame.time.get_ticks()
         
