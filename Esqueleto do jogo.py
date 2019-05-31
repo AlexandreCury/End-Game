@@ -38,6 +38,8 @@ def load_spritesheet(spritesheet, rows, columns):
     sprite_width = spritesheet.get_width() // columns
     sprite_height = spritesheet.get_height() // rows
     
+    
+    
     # Percorre todos os sprites adicionando em uma lista.
     sprites = []
     for row in range(rows):
@@ -50,9 +52,17 @@ def load_spritesheet(spritesheet, rows, columns):
 
             # Cria uma imagem vazia do tamanho do sprite
             image = pygame.Surface((sprite_width, sprite_height))
+                        
             # Copia o sprite atual (do spritesheet) na imagem
             image.blit(spritesheet, (0, 0), dest_rect)
+            
+            
+            
             sprites.append(image)
+            
+            
+            
+            
     return sprites
 
 
@@ -67,11 +77,10 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #Carregando a imagem de fundo
-        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert_alpha()
-        player_img_mask = pygame.mask.from_surface(player_img)
-        self.image = player_img_mask
-
         
+        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert_alpha()
+#        player_img_mask = pygame.mask.from_surface(player_img)
+#        self.image = player_img_mask
 
 
         # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
@@ -83,9 +92,6 @@ class Player(pygame.sprite.Sprite):
         # Inicializa o primeiro quadro da animação
         self.frame = 0
         self.image = self.animation[self.frame]
-
-
-
 
         
         #Deixando transparente.
@@ -122,7 +128,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         
         
-        
         # Verifica o tick atual.
         now = pygame.time.get_ticks()
 
@@ -146,9 +151,11 @@ class Player(pygame.sprite.Sprite):
             center = self.rect.center
             # Atualiza imagem atual
             self.image = self.animation[self.frame]
+            self.image.set_colorkey(BLACK)
             # Atualiza os detalhes de posicionamento
             self.rect = self.image.get_rect()
             self.rect.center = center
+            
         
         
         
@@ -161,13 +168,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = 350
         if self.rect.left < 0:
             self.rect.left = 0
-
-
-
-            
-
-
-
 
 
 
@@ -467,7 +467,7 @@ player = Player()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
-# Cria um grupo só dos aviões
+# Cria um grupo só dos aviões n
 mobs = pygame.sprite.Group()
 
 # Cria um grupo só das bombas
@@ -642,7 +642,7 @@ try:
 
 
         # A cada loop, redesenha o fundo e os sprites
-        screen.fill(BLACK)
+        screen.fill(BLACK )
 
         # Atualiza a posição da imagem de fundo.
         background_rect.x += VEL_MAP
