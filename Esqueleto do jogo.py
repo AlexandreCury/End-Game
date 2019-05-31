@@ -508,7 +508,7 @@ try:
             o=Explosion2(x,y)
             all_sprites.add(o)
             w=Explosion3(x,y)
-            all_sprites.add(o)
+            all_sprites.add(w)
         
         if hits_coins:
             # Toca o som da colisão
@@ -523,7 +523,7 @@ try:
             all_sprites.add(j)
         
         # Troca moedas por vida
-        moedas_por_vida = 2
+        moedas_por_vida = 6
         if moedas == moedas_por_vida:
             if life < 3:
                 moedas = 0
@@ -539,7 +539,7 @@ try:
             o=Explosion2(x,y)
             all_sprites.add(o)
             w=Explosion3(x,y)
-            all_sprites.add(o)
+            all_sprites.add(w)
 
 
         # A cada loop, redesenha o fundo e os sprites
