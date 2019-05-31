@@ -527,7 +527,7 @@ try:
         # Troca moedas por vida
         moedas_por_vida = 2
         if moedas == moedas_por_vida:
-            if life < 3:
+            if life < 4:
                 moedas = 0
                 life +=1
             else:
