@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #Carregando a imagem de fundo
-        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert()
+        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert_alpha()
         player_img_mask = pygame.mask.from_surface(player_img)
         self.image = player_img_mask
 
@@ -75,7 +75,7 @@ class Player(pygame.sprite.Sprite):
 
 
         # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
-        player_sheet = pygame.transform.scale(player_img, (240, 240))
+        player_sheet = pygame.transform.scale(player_img, (263, 240))
                 
         # Define sequências de sprites de cada animação
         self.animation = load_spritesheet(player_sheet, 3, 3)
