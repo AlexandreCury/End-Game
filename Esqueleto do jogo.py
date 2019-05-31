@@ -227,7 +227,7 @@ class Explosion1(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         now =  pygame.time.get_ticks()
-        if now - self.tempo > 300:
+        if now - self.tempo > 500:
             self.kill()
             
 class Explosion2(pygame.sprite.Sprite):
@@ -265,7 +265,7 @@ class Explosion2(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         now =  pygame.time.get_ticks()
-        if now - self.tempo > 300:
+        if now - self.tempo > 350:
             self.kill()
             
 
