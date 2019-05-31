@@ -30,6 +30,33 @@ YELLOW = (255, 255, 0)
 pygame.init()
 pygame.mixer.init()
 
+
+
+# Essa função assume que os sprites no sprite sheet possuem todos o mesmo tamanho.
+def load_spritesheet(spritesheet, rows, columns):
+    # Calcula a largura e altura de cada sprite.
+    sprite_width = spritesheet.get_width() // columns
+    sprite_height = spritesheet.get_height() // rows
+    
+    # Percorre todos os sprites adicionando em uma lista.
+    sprites = []
+    for row in range(rows):
+        for column in range(columns):
+            # Calcula posição do sprite atual
+            x = column * sprite_width
+            y = row * sprite_height
+            # Define o retângulo que contém o sprite atual
+            dest_rect = pygame.Rect(x, y, sprite_width, sprite_height)
+
+            # Cria uma imagem vazia do tamanho do sprite
+            image = pygame.Surface((sprite_width, sprite_height))
+            # Copia o sprite atual (do spritesheet) na imagem
+            image.blit(spritesheet, (0, 0), dest_rect)
+            sprites.append(image)
+    return sprites
+
+
+
 #Classe Jogador que representa a nave:
 class Player(pygame.sprite.Sprite):
     
@@ -40,13 +67,26 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #Carregando a imagem de fundo
-        player_img = pygame.image.load(path.join(img_dir, "Dog.png")).convert()
-        #self.image = player_img_mask
+        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert()
         player_img_mask = pygame.mask.from_surface(player_img)
         self.image = player_img_mask
+
         
-        #Diminuindo o tamanho da imagem
-        self.image = pygame.transform.scale(player_img, (100,68))
+
+
+        # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
+        player_sheet = pygame.transform.scale(player_img, (240, 240))
+                
+        # Define sequências de sprites de cada animação
+        self.animation = load_spritesheet(player_sheet, 3, 3)
+                        
+        # Inicializa o primeiro quadro da animação
+        self.frame = 0
+        self.image = self.animation[self.frame]
+
+
+
+
         
         #Deixando transparente.
         self.image.set_colorkey(BLACK)
@@ -58,6 +98,20 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = WIDTH / 10
         self.rect.bottom = HEIGHT - 375
         
+        
+        
+        
+        
+        # Guarda o tick da primeira imagem
+        self.last_update = pygame.time.get_ticks()
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        self.frame_ticks = 300
+        
+        
+        
+        
+        
         #Velocidade da nave
         self.speedy = 0
         self.speedx = 0
@@ -66,6 +120,37 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.speedy
         self.rect.x += self.speedx
+        
+        
+        
+        # Verifica o tick atual.
+        now = pygame.time.get_ticks()
+
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+        
+            if self.frame >= len(self.animation):
+                self.frame = 0
+                
+            
+            # Armazena a posição do centro da imagem
+            center = self.rect.center
+            # Atualiza imagem atual
+            self.image = self.animation[self.frame]
+            # Atualiza os detalhes de posicionamento
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+        
+        
         
         # Mantem dentro da tela
         if self.rect.bottom > HEIGHT:
@@ -76,6 +161,15 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = 350
         if self.rect.left < 0:
             self.rect.left = 0
+
+
+
+            
+
+
+
+
+
 
 class Mob(pygame.sprite.Sprite):
     
