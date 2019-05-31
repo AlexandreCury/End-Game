@@ -198,7 +198,7 @@ class Mob(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = random.randrange(HEIGHT - 80)
         # Sorteia uma velocidade inicial
-        self.speedx = -15
+        self.speedx = VEL_MAP -10
         self.speedy = 0
 
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -237,7 +237,7 @@ class Bomb(pygame.sprite.Sprite):
         self.rect.y = random.randrange(HEIGHT - 80)
         
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = VEL_MAP
         self.speedy=0
 
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -275,7 +275,7 @@ class Coins(pygame.sprite.Sprite):
         self.rect.y = random.randrange(HEIGHT - 80)
         
         # Sorteia uma velocidade inicial
-        self.speedx = -5
+        self.speedx = VEL_MAP
         self.speedy=0
 
         # Melhora a colisão estabelecendo um raio de um circulo
@@ -311,7 +311,7 @@ class Explosion1(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = y
         
-        self.speedx =-3
+        self.speedx =VEL_MAP + 2
         self.speedy=0
         
         self.tempo = pygame.time.get_ticks()
@@ -349,7 +349,7 @@ class Explosion2(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = y
         
-        self.speedx =-3
+        self.speedx = VEL_MAP + 2
         self.speedy=0
         
         self.tempo = pygame.time.get_ticks()
@@ -387,7 +387,7 @@ class Explosion3(pygame.sprite.Sprite):
         # Sorteia um lugar inicial em y
         self.rect.y = y
         
-        self.speedx =-3
+        self.speedx = VEL_MAP + 2
         self.speedy=0
         
         self.tempo = pygame.time.get_ticks()
@@ -426,7 +426,7 @@ class Money(pygame.sprite.Sprite):
         self.rect.y = y
         
          # Sorteia uma velocidade inicial
-        self.speedx = -3
+        self.speedx = -3 + VEL_MAP
         self.speedy=-3.5
         
         self.tempo = pygame.time.get_ticks()
@@ -455,7 +455,9 @@ background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
 
 #musica de fundo do jogo
-musica_fundo = pygame.mixer.music.load(path.join(snd_dir,"Pinball-Gremlins.ogg"))
+#pygame.mixer.music.load(path.join(snd_dir,"The-Pixel-Rag (online-audio-converter.com).ogg"))
+#pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
 pygame.mixer.music.set_volume(0.4)
 
 #Cria uma nave. O construtor será chamado automaticamente
@@ -502,7 +504,8 @@ try:
 
     # Moedas
     moedas = 0
-
+    
+    pygame.mixer.music.play(loops=-1)
     # Loop principal.
     while life > 0:
         
@@ -587,12 +590,14 @@ try:
             #boom_sound.play()
             #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
+            VEL_MAP-=0.5
         if hits_bomb:
             # Toca o som da colisão
             #boom_sound.play()
             #demonstra a imagem da explosão
             #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
+            VEL_MAP-=0.5
         #chama a explosão com a bomba
         for m in hits_bomb:
             x=m.rect.centerx
@@ -602,7 +607,7 @@ try:
             o=Explosion2(x,y)
             all_sprites.add(o)
             w=Explosion3(x,y)
-            all_sprites.add(o)
+            all_sprites.add(w)
         
         if hits_coins:
             # Toca o som da colisão
@@ -619,7 +624,7 @@ try:
         # Troca moedas por vida
         moedas_por_vida = 2
         if moedas == moedas_por_vida:
-            if life < 3:
+            if life < 4:
                 moedas = 0
                 life +=1
             else:
@@ -633,7 +638,7 @@ try:
             o=Explosion2(x,y)
             all_sprites.add(o)
             w=Explosion3(x,y)
-            all_sprites.add(o)
+            all_sprites.add(w)
 
 
         # A cada loop, redesenha o fundo e os sprites
