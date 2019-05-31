@@ -227,7 +227,7 @@ class Explosion1(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         now =  pygame.time.get_ticks()
-        if now - self.tempo > 500:
+        if now - self.tempo > 200:
             self.kill()
             
 class Explosion2(pygame.sprite.Sprite):
@@ -265,7 +265,45 @@ class Explosion2(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         now =  pygame.time.get_ticks()
-        if now - self.tempo > 350:
+        if now - self.tempo > 500:
+            self.kill()
+            
+class Explosion3(pygame.sprite.Sprite):
+    
+    #constroi a classe
+    def __init__(self,x,y):
+         # Construtor da classe pai (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        
+        # Carregando a imagem de fundo.
+        mob_img = pygame.image.load(path.join(img_dir, "explosao3.png")).convert()
+        
+        # Diminuindo o tamanho da imagem.
+        self.image = pygame.transform.scale(mob_img, (70, 48))
+        
+        # Deixando transparente.
+        self.image.set_colorkey(BLACK)
+        
+        #posicao
+        self.rect = self.image.get_rect()
+        
+        # Sorteia um lugar inicial em x
+        self.rect.x = x
+        
+        # Sorteia um lugar inicial em y
+        self.rect.y = y
+        
+        self.speedx =-3
+        self.speedy=0
+        
+        self.tempo = pygame.time.get_ticks()
+        
+        #atualiza a função
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        now =  pygame.time.get_ticks()
+        if now - self.tempo > 700:
             self.kill()
             
 
@@ -469,6 +507,8 @@ try:
             all_sprites.add(e) 
             o=Explosion2(x,y)
             all_sprites.add(o)
+            w=Explosion3(x,y)
+            all_sprites.add(o)
         
         if hits_coins:
             # Toca o som da colisão
@@ -497,6 +537,8 @@ try:
             e=Explosion1(x,y)
             all_sprites.add(e)
             o=Explosion2(x,y)
+            all_sprites.add(o)
+            w=Explosion3(x,y)
             all_sprites.add(o)
 
 
