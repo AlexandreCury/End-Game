@@ -36,9 +36,7 @@ pygame.mixer.init()
 def load_spritesheet(spritesheet, rows, columns):
     # Calcula a largura e altura de cada sprite.
     sprite_width = spritesheet.get_width() // columns
-    sprite_height = spritesheet.get_height() // rows
-    
-    
+    sprite_height = spritesheet.get_height() // rows 
     
     # Percorre todos os sprites adicionando em uma lista.
     sprites = []
@@ -55,14 +53,8 @@ def load_spritesheet(spritesheet, rows, columns):
                         
             # Copia o sprite atual (do spritesheet) na imagem
             image.blit(spritesheet, (0, 0), dest_rect)
-            
-            
-            
             sprites.append(image)
-            
-            
-            
-            
+    
     return sprites
 
 
@@ -78,7 +70,7 @@ class Player(pygame.sprite.Sprite):
         
         #Carregando a imagem de fundo
         
-        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet.png")).convert_alpha()
+        player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet2.png")).convert_alpha()
 #        player_img_mask = pygame.mask.from_surface(player_img)
 #        self.image = player_img_mask
 
@@ -103,21 +95,13 @@ class Player(pygame.sprite.Sprite):
         # Posiciona o dog
         self.rect.centery = WIDTH / 10
         self.rect.bottom = HEIGHT - 375
-        
-        
-        
-        
-        
+              
         # Guarda o tick da primeira imagem
         self.last_update = pygame.time.get_ticks()
 
         # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
         self.frame_ticks = 300
-        
-        
-        
-        
-        
+              
         #Velocidade da nave
         self.speedy = 0
         self.speedx = 0
@@ -126,7 +110,6 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.speedy
         self.rect.x += self.speedx
-        
         
         # Verifica o tick atual.
         now = pygame.time.get_ticks()
@@ -146,11 +129,17 @@ class Player(pygame.sprite.Sprite):
             if self.frame >= len(self.animation):
                 self.frame = 0
                 
+                
+            #Pula o quadro vazio
+#            if self.frame == self.animation[0]:
+#                self.frame = 4
+                
             
             # Armazena a posição do centro da imagem
             center = self.rect.center
             # Atualiza imagem atual
             self.image = self.animation[self.frame]
+            #Deixa invisível
             self.image.set_colorkey(BLACK)
             # Atualiza os detalhes de posicionamento
             self.rect = self.image.get_rect()
