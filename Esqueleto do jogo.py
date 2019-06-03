@@ -9,6 +9,7 @@ Created on Tue May  7 16:59:18 2019
 import pygame
 import random
 from os import path
+import emoji
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 snd_dir = path.join(path.dirname(__file__), 'snd')
@@ -71,9 +72,6 @@ class Player(pygame.sprite.Sprite):
         #Carregando a imagem de fundo
         
         player_img = pygame.image.load(path.join(img_dir, "sprite_player_sheet2.png")).convert_alpha()
-#        player_img_mask = pygame.mask.from_surface(player_img)
-#        self.image = player_img_mask
-
 
         # Aumenta o tamanho do spritesheet para ficar mais fácil de ver
         player_sheet = pygame.transform.scale(player_img, (263, 240))
@@ -422,9 +420,7 @@ class Money(pygame.sprite.Sprite):
         if now - self.tempo > 500:
             self.kill()
         
-                
-        
-      
+
 # Tamanho da tela.
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # Nome do jogo
@@ -583,18 +579,13 @@ try:
 
 
         if hits:
-            # Toca o som da colisão
-            #boom_sound.play()
-            #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
             VEL_MAP-=0.5
+        
         if hits_bomb:
-            # Toca o som da colisão
-            #boom_sound.play()
-            #demonstra a imagem da explosão
-            #time.sleep(1) # Precisa esperar senão fecha
             life -= 1
             VEL_MAP-=0.5
+        
         #chama a explosão com a bomba
         for m in hits_bomb:
             x=m.rect.centerx
@@ -610,7 +601,6 @@ try:
             # Toca o som da colisão
             boom_sound.play()
             moedas += 1
-            #coins.remove()
             
         for m in hits_coins:
             x=m.rect.centerx
@@ -656,6 +646,7 @@ try:
         screen.blit(background, background_rect2)
         all_sprites.draw(screen)
 
+        # Mostrar Score
         pontuacao= "Score : {0}".format(score)
         draw_text_yellow(screen, pontuacao,30, WIDTH / 2, 10)
 
