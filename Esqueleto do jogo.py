@@ -9,7 +9,6 @@ Created on Tue May  7 16:59:18 2019
 import pygame
 import random
 from os import path
-import emoji
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 snd_dir = path.join(path.dirname(__file__), 'snd')
@@ -129,12 +128,6 @@ class Player(pygame.sprite.Sprite):
         
             if self.frame >= len(self.animation):
                 self.frame = 0
-                
-                
-            #Pula o quadro vazio
-#            if self.frame == self.animation[0]:
-#                self.frame = 4
-                
             
             # Armazena a posição do centro da imagem
             center = self.rect.center
@@ -445,8 +438,6 @@ background = pygame.image.load(path.join(img_dir, 'Fundo.png')).convert()
 background_rect = background.get_rect()
 
 #musica de fundo do jogo
-#pygame.mixer.music.load(path.join(snd_dir,"The-Pixel-Rag (online-audio-converter.com).ogg"))
-#pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
 pygame.mixer.music.set_volume(0.4)
 
@@ -478,6 +469,13 @@ font_name = pygame.font.match_font('arial')
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
+def draw_text_yellow(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, YELLOW)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
@@ -659,16 +657,16 @@ try:
         all_sprites.draw(screen)
 
         pontuacao= "Score : {0}".format(score)
-        draw_text(screen, pontuacao, 20, WIDTH / 2, 10)
+        draw_text_yellow(screen, pontuacao,30, WIDTH / 2, 10)
 
         # Aviso de modas
         aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 3 vidas no maximo"
         if score < 3: #mostra a mensagem por 4 segundos
-            draw_text(screen, aviso, 24, WIDTH / 2, HEIGHT-50)
+            draw_text(screen, aviso, 30, WIDTH / 2, HEIGHT-50)
         
-        # Emoji coração
-        coracao = (emoji.emojize(':heart:', use_aliases=True))*life
-        draw_text(screen, coracao, 35, WIDTH*4/5, 10)
+        # Vida
+        vida_atual= "Vida = {}".format(life)
+        draw_text(screen, str(vida_atual), 30, WIDTH*9/10, 10)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
