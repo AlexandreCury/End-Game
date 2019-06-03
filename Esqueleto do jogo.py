@@ -9,6 +9,7 @@ Created on Tue May  7 16:59:18 2019
 import pygame
 import random
 from os import path
+import emoji
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 snd_dir = path.join(path.dirname(__file__), 'snd')
@@ -472,6 +473,15 @@ explosions = pygame.sprite.Group()
 #cria um grupo dos cifores
 moneys = pygame.sprite.Group()
 
+# Define texto
+font_name = pygame.font.match_font('arial')
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
 #Velocidade com que o mapa se move
 VEL_MAP = -5
 
@@ -632,6 +642,7 @@ try:
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK )
+        screen.blit(background, background_rect)
 
         # Atualiza a posição da imagem de fundo.
         background_rect.x += VEL_MAP
@@ -645,9 +656,20 @@ try:
         background_rect2 = background_rect.copy()
         background_rect2.x += background_rect2.width
         screen.blit(background, background_rect2)
-        
         all_sprites.draw(screen)
+
+        pontuacao= "Score : {0}".format(score)
+        draw_text(screen, pontuacao, 20, WIDTH / 2, 10)
+
+        # Aviso de modas
+        aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 3 vidas no maximo"
+        if score < 3: #mostra a mensagem por 4 segundos
+            draw_text(screen, aviso, 24, WIDTH / 2, HEIGHT-50)
         
+        # Emoji coração
+        coracao = (emoji.emojize(':heart:', use_aliases=True))*life
+        draw_text(screen, coracao, 35, WIDTH*4/5, 10)
+
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
         
