@@ -9,7 +9,6 @@ Created on Tue May  7 16:59:18 2019
 import pygame
 import random
 from os import path
-import emoji
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 snd_dir = path.join(path.dirname(__file__), 'snd')
@@ -505,7 +504,7 @@ try:
         #contador
         contador += 1
 
-        if contador == 100:
+        if contador == 10:
             score +=1
             contador = 0
 
@@ -651,8 +650,8 @@ try:
         draw_text_yellow(screen, pontuacao,30, WIDTH / 2, 10)
 
         # Aviso de modas
-        aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 3 vidas no maximo"
-        if score < 3: #mostra a mensagem por 4 segundos
+        aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 4 vidas no maximo"
+        if score < 6: #mostra a mensagem por 4 segundos
             draw_text(screen, aviso, 30, WIDTH / 2, HEIGHT-50)
         
         # Vida
