@@ -58,7 +58,6 @@ def load_spritesheet(spritesheet, rows, columns):
     return sprites
 
 
-
 #Classe Jogador que representa a nave:
 class Player(pygame.sprite.Sprite):
     
@@ -136,8 +135,6 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = center
             
-        
-        
         
         # Mantem dentro da tela
         if self.rect.bottom > HEIGHT:
@@ -481,6 +478,10 @@ VEL_MAP = -5
 # Score
 score = 0
 
+#le recorde score
+with open("Score.txt", "r") as arquivo:
+    score_maximo= arquivo.read()
+
 #Contador
 contador = 0
 
@@ -646,8 +647,15 @@ try:
         all_sprites.draw(screen)
 
         # Mostrar Score
-        pontuacao= "Score : {0}".format(score)
-        draw_text_yellow(screen, pontuacao,30, WIDTH / 2, 10)
+        pontuacao= "Seu score : {0}".format(score)
+        draw_text_yellow(screen, pontuacao, 30, WIDTH / 2, 40)
+
+        #Score Máximo:
+        draw_text_yellow(screen, "Recorde {0}".format(str(score_maximo)), 30, WIDTH / 2, 10)
+        #Atualiza o score maximo
+        if score > int(score_maximo):
+            with open("Score.txt", "w") as arquivo:
+                arquivo.write(str(score))
 
         # Aviso de modas
         aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 4 vidas no maximo"
