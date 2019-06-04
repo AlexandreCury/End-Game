@@ -8,7 +8,10 @@ Created on Tue May  7 16:59:18 2019
 # Importando as bibliotecas necessárias.
 import pygame
 import random
-from os import path
+from os import path, environ
+
+environ['SDL_VIDEO_CENTERED'] = '1'
+
 # Estabelece a pasta que contem as figuras.
 img_dir = path.join(path.dirname(__file__), 'img')
 snd_dir = path.join(path.dirname(__file__), 'snd')
@@ -504,6 +507,7 @@ try:
         
         #contador
         contador += 1
+        VEL_MAP-=0.003
 
         if contador == 10:
             score +=1
@@ -609,7 +613,7 @@ try:
             all_sprites.add(j)
         
         # Troca moedas por vida
-        moedas_por_vida = 2
+        moedas_por_vida = 5
         if moedas == moedas_por_vida:
             if life < 4:
                 moedas = 0
@@ -658,8 +662,8 @@ try:
                 arquivo.write(str(score))
 
         # Aviso de modas
-        aviso= "A cada 2 moedas, você ganha 1 vida, chegando a 4 vidas no maximo"
-        if score < 6: #mostra a mensagem por 4 segundos
+        aviso= "A cada 5 moedas, você ganha 1 vida, chegando a 4 vidas no maximo"
+        if score < 10: #mostra a mensagem por 4 segundos
             draw_text(screen, aviso, 30, WIDTH / 2, HEIGHT-50)
         
         # Vida
